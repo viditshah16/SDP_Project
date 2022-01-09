@@ -32,7 +32,7 @@ emotion_model.add(Flatten())
 emotion_model.add(Dense(1024, activation='relu'))
 emotion_model.add(Dropout(0.5))
 emotion_model.add(Dense(7, activation='softmax'))
-emotion_model.load_weights('model/emotion_model.h5')
+emotion_model.load_weights("C:/Users/Vidit/Desktop/emoji-creator-project-code/emoji-creator-project-code/model/emotion_model.h5")
 
 cv2.ocl.setUseOpenCL(False)
 
@@ -67,7 +67,7 @@ def show_vid():
 
     image = livevideo()
     imag = cv2.imread(image)
-    bounding_box = cv2.CascadeClassifier('haarcascades/haarcascade_frontalface_default.xml')
+    bounding_box = cv2.CascadeClassifier("C:/Users/Vidit/Desktop/emoji-creator-project-code/emoji-creator-project-code/haarcascades/haarcascade_frontalface_default.xml")
     gray_frame = cv2.cvtColor(imag, cv2.COLOR_BGR2GRAY)
     num_faces = bounding_box.detectMultiScale(gray_frame,scaleFactor=1.3, minNeighbors=5)
 
@@ -81,7 +81,7 @@ def show_vid():
         maxindex = int(np.argmax(prediction))
         cv2.putText(imag,emotion_dict[maxindex], (x+20, y-60), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
         show_text[0]=maxindex
-        # break
+        break
     # if flag1 is None:
     #     print ("Major error!")
     # elif flag1:

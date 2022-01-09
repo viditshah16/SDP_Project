@@ -57,7 +57,7 @@ emotion_model_info = emotion_model.fit_generator(
         epochs=50,
         validation_data=validation_generator,
         validation_steps=7178 // 64)
-emotion_model.save_weights('emotion_model.h5')
+emotion_model.save_weights("C:/Users/Vidit/Desktop/emoji-creator-project-code/emoji-creator-project-code/model/emotion_model.h5")
 
 # start the webcam feed
 cap = cv2.VideoCapture(0)
@@ -66,7 +66,7 @@ while True:
     ret, frame = cap.read()
     if not ret:
         break
-    bounding_box = cv2.CascadeClassifier('haarcascades/haarcascade_frontalface_default.xml')
+    bounding_box = cv2.CascadeClassifier("C:/Users/Vidit/Desktop/emoji-creator-project-code/emoji-creator-project-code/haarcascades/haarcascade_frontalface_default.xml")
     gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     num_faces = bounding_box.detectMultiScale(gray_frame, scaleFactor=1.3, minNeighbors=5)
 
