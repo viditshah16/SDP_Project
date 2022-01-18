@@ -94,6 +94,7 @@ def show_vid():
     lmain.configure(image=imgtk)
     root.update()
     lmain.after(10, show_vid)
+    os.remove("C:/Users/Vidit/Desktop/emoji-creator-project-code/{0}".format(image))
     if cv2.waitKey(1) & 0xFF == ord('q'):
         exit()
 
