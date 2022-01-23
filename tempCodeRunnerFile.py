@@ -1,0 +1,1 @@
+img = cv2.resize(img , (48,48))
