@@ -1,8 +1,10 @@
+from logging import exception
 from flask import Flask, redirect, render_template, request, url_for, redirect
 from flask_socketio import SocketIO , join_room
-from db import get_user
+from db import get_user, save_user
 from video import livevideo 
 import cv2
+from pymongo.errors import DuplicateKeyError
 from keras.models import load_model
 import numpy as np
 from flask_login import LoginManager, current_user, login_user , login_required , logout_user 
@@ -37,6 +39,25 @@ def login():
             message = 'Failed Login!'
 
     return render_template('login.html' , message=message)
+
+
+@app.route("/signup" , methods=['GET', 'POST'])
+def signup():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+
+    message = ''
+    if request.method=='POST':
+        username = request.form.get('username')
+        email = request.form.get('email')
+        password =request.form.get('password')
+        try:
+            save_user(username , email , password)
+            return redirect(url_for('login'))
+        except DuplicateKeyError:
+            message="User Already Exist"
+    return render_template('signup.html' , message=message)
+
 
 @app.route("/logout")
 @login_required
