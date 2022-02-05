@@ -15,7 +15,6 @@
                 username: "{{ username }}",
                 room: "{{room}}"
             })
-            let flag=0
             let message_input = document.getElementById('message_input');
             document.getElementById('message_input_form').onsubmit = function(e) {
                 e.preventDefault();
@@ -41,10 +40,10 @@
 
         socket.on('receive_message' , function(data){
             console.log(data);
-            flag=1
             const newNode = document.createElement('div');
             newNode.innerHTML = `<b>${data.username} : &nbsp;</b>${data.message}`;
             document.getElementById('messages').appendChild(newNode);
+            document.getElementById('message_input').value=''
         })
 
         socket.on('join_room_announcement' , function(data){
@@ -61,11 +60,6 @@
             // document.getElementById('emoji').appendChild(newNode)
             let append_emoji = final
             document.getElementById('message_input').value+=append_emoji
-            if(flag==1)
-            {
-                document.getElementById('message_input').value -=append_emoji
-                flag=0
-            }
         })
         
     </script>

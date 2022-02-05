@@ -1,23 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Chat App</title>
 </head>
+
 <body>
     <h1>Welcome To Chat Application</h1>
+    <h1>
+        Hii
+        {% if current_user.is_authenticated %}
+        {{current_user.username}}
+        {% else %}
+        Guest
+        {% endif %}
+    </h1>
+    <!-- <h3>Please Login <a href="{{url_for('login')}}">here</a></h3> -->
+    
     <form action="{{url_for('chat')}}" method="post" enctype="multipart/form-data">
         <div>
             <label>Enter Your username : </label>
-            <input type="text" name = "username">
+            <input type="text" name="username">
         </div>
         <div>
             <label>Enter room id : </label>
-            <input type="text" name = "room">
+            <input type="text" name="room">
         </div>
         <button type="submit">Submit</button>
     </form>
 </body>
+
 </html>

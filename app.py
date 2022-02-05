@@ -1,18 +1,51 @@
 from flask import Flask, redirect, render_template, request, url_for, redirect
 from flask_socketio import SocketIO , join_room
+from db import get_user
 from video import livevideo 
 import cv2
 from keras.models import load_model
 import numpy as np
+from flask_login import LoginManager, current_user, login_user , login_required , logout_user 
 
 app = Flask(__name__)
 socketio = SocketIO(app)
+app.secret_key = "my secret key"
+
+login_manager = LoginManager()
+login_manager.login_view = 'login'
+login_manager.init_app(app)
 
 @app.route('/')
 def home():
     return render_template("index.html")
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+
+    message = ''
+    if request.method=='POST':
+        username = request.form.get('username')
+        password_input =request.form.get('password')
+        user = get_user(username)
+
+        if user and user.check_password(password_input):
+            login_user(user)
+            return redirect(url_for('home'))
+        else:
+            message = 'Failed Login!'
+
+    return render_template('login.html' , message=message)
+
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('home'))
+
 @app.route('/chat' , methods=['GET' , 'POST'])
+@login_required
 def chat():
     if request.method == "POST":
         username = request.form["username"]
@@ -70,6 +103,10 @@ def handle_send_message_event(data):
     app.logger.info("{} has sent message to the room {} : {}".format(data['username'] , data['room'] , data['message']))
     socketio.emit('receive_message' , data , room=data['room'])
 
+
+@login_manager.user_loader
+def load_user(username):
+    return get_user(username)
 
 if __name__ == '__main__':
     socketio.run(app , debug=True)
