@@ -11,26 +11,31 @@
 <body>
     <h1>Welcome To Chat Application</h1>
     <h1>
-        Hii
         {% if current_user.is_authenticated %}
+        Hello , 
         {{current_user.username}}
         {% else %}
-        Guest
+        Please Login here
+        <br>
+        <a href="/login">Login</a>
         {% endif %}
     </h1>
     <!-- <h3>Please Login <a href="{{url_for('login')}}">here</a></h3> -->
     
-    <form action="{{url_for('chat')}}" method="post" enctype="multipart/form-data">
-        <div>
-            <label>Enter Your username : </label>
-            <input type="text" name="username">
-        </div>
-        <div>
-            <label>Enter room id : </label>
-            <input type="text" name="room">
-        </div>
-        <button type="submit">Submit</button>
-    </form>
+    
+    {% if current_user.is_authenticated %}
+    <h3>My rooms</h3>
+    <ul>
+        {% for room in rooms %}
+            <!-- {{room._id.room_id}} -->
+            <li><a href="/rooms/{{room._id.room_id}}">{{ room.room_name }}</a></li>
+        {% endfor %}
+    </ul>
+    <h3>Want Create Your Own Room , Press below Link</h3>
+    <a href="/create-room/">Create-New-room</a>
+    <h3>Logout Here</h3>
+    <a href="/logout">Logout</a>
+{% endif %}
 </body>
 
 </html>

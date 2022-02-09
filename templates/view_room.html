@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,62 +14,68 @@
         socket.on('connect', function () {
             socket.emit('join_room', {
                 username: "{{ username }}",
-                room: "{{room}}"
+                room: "{{room._id}}"
             })
             let message_input = document.getElementById('message_input');
-            document.getElementById('message_input_form').onsubmit = function(e) {
+            document.getElementById('message_input_form').onsubmit = function (e) {
                 e.preventDefault();
                 let message = message_input.value.trim()
-                if(message.length)
-                {
-                    socket.emit('send_message' , {
+                if (message.length) {
+                    socket.emit('send_message', {
                         username: "{{ username }}",
-                        room: "{{room}}",
-                        message:message
+                        room: "{{room._id}}",
+                        message: message
                     })
                 }
-                message_input.value='';
+                message_input.value = '';
                 message_input.focus();
             }
-            document.getElementById('emoji_form').onsubmit = function(e)
-            {
+            document.getElementById('emoji_form').onsubmit = function (e) {
                 e.preventDefault();
                 socket.emit('emotion')
             }
 
         });
 
-        socket.on('receive_message' , function(data){
+        window.onbeforeunload = function () {
+            socket.emit('leave_room', {
+                username: "{{ username }}",
+                room: "{{ room._id }}"
+            })
+        };
+
+        socket.on('receive_message', function (data) {
             console.log(data);
             const newNode = document.createElement('div');
             newNode.innerHTML = `<b>${data.username} : &nbsp;</b>${data.message}`;
             document.getElementById('messages').appendChild(newNode);
-            document.getElementById('message_input').value=''
+            document.getElementById('message_input').value = ''
         })
 
-        socket.on('join_room_announcement' , function(data){
+        socket.on('join_room_announcement', function (data) {
             console.log(data);
             const newNode = document.createElement('div');
             newNode.innerHTML = `<b>${data.username}</b> has joined the room`;
-            document.getElementById('messages').appendChild(newNode); 
+            document.getElementById('messages').appendChild(newNode);
         })
 
-        socket.on('catch_emotion' , function(final){
+        socket.on('catch_emotion', function (final) {
             console.log(final)
             // const newNode = document.createElement('div');
             // newNode.innerHTML = `${final}`;
             // document.getElementById('emoji').appendChild(newNode)
             let append_emoji = final
-            document.getElementById('message_input').value+=append_emoji
+            document.getElementById('message_input').value += append_emoji
+            document.getElementById('message_input').focus()
         })
-        
+
     </script>
     <title>Chat page</title>
 </head>
 
 <body>
 
-    <h4>Welcome , {{username}} To Chat Room {{room}}</h4>
+    <h4>Welcome To Chat Room {{room.name}}</h4>
     <div id="messages"></div>
 
     <form id="message_input_form">
@@ -79,9 +86,16 @@
     <form id="emoji_form">
         <button type="submit">Emojify</button>
     </form>
-    <div id="emoji"></div>
+    <ul>
+        {% for member in room_members%}
+            <li>{{member._id.username}}</li>
+        {% endfor %}
+    </ul>
 
-    
+    <h3>Logout Here</h3>
+    <a href="/logout">Logout</a>
+
+
 
 </body>
 
