@@ -5,78 +5,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"
-        integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA=="
-        crossorigin="anonymous"></script>
-
-    <script type="text/javascript" charset="utf-8">
-        var socket = io();
-        socket.on('connect', function () {
-            socket.emit('join_room', {
-                username: "{{ username }}",
-                room: "{{room._id}}"
-            })
-            let message_input = document.getElementById('message_input');
-            document.getElementById('message_input_form').onsubmit = function (e) {
-                e.preventDefault();
-                let message = message_input.value.trim()
-                if (message.length) {
-                    socket.emit('send_message', {
-                        username: "{{ username }}",
-                        room: "{{room._id}}",
-                        message: message
-                    })
-                }
-                message_input.value = '';
-                message_input.focus();
-            }
-            document.getElementById('emoji_form').onsubmit = function (e) {
-                e.preventDefault();
-                socket.emit('emotion')
-            }
-
-        });
-
-        window.onbeforeunload = function () {
-            socket.emit('leave_room', {
-                username: "{{ username }}",
-                room: "{{ room._id }}"
-            })
-        };
-
-        socket.on('receive_message', function (data) {
-            console.log(data);
-            const newNode = document.createElement('div');
-            newNode.innerHTML = `<b>${data.username} : &nbsp;</b>${data.message}`;
-            document.getElementById('messages').appendChild(newNode);
-            document.getElementById('message_input').value = ''
-        })
-
-        socket.on('join_room_announcement', function (data) {
-            console.log(data);
-            const newNode = document.createElement('div');
-            newNode.innerHTML = `<b>${data.username}</b> has joined the room`;
-            document.getElementById('messages').appendChild(newNode);
-        })
-
-        socket.on('catch_emotion', function (final) {
-            console.log(final)
-            // const newNode = document.createElement('div');
-            // newNode.innerHTML = `${final}`;
-            // document.getElementById('emoji').appendChild(newNode)
-            let append_emoji = final
-            document.getElementById('message_input').value += append_emoji
-            document.getElementById('message_input').focus()
-        })
-
-    </script>
     <title>Chat page</title>
 </head>
 
 <body>
 
     <h4>Welcome To Chat Room {{room.name}}</h4>
-    <div id="messages"></div>
+    <button id="load_older_messages_btn">Load older Messages</button>
+    <div id="messages">
+        {% for message in messages %}
+        <div><b>{{message.sender}}&nbsp;[{{message.created_at}}]: &nbsp;</b>{{message.text}}</div>
+        {% endfor %}
+    </div>
 
     <form id="message_input_form">
         <input type="text" id="message_input" placeholder="Enter Your Message">
@@ -88,7 +28,7 @@
     </form>
     <ul>
         {% for member in room_members%}
-            <li>{{member._id.username}}</li>
+        <li>{{member._id.username}}</li>
         {% endfor %}
     </ul>
 
@@ -96,7 +36,93 @@
     <a href="/logout">Logout</a>
 
 
-
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"
+    integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA=="
+    crossorigin="anonymous"></script>
+
+<script type="text/javascript" charset="utf-8">
+    var socket = io();
+    socket.on('connect', function () {
+        socket.emit('join_room', {
+            username: "{{ username }}",
+            room: "{{room._id}}"
+        })
+        let message_input = document.getElementById('message_input');
+        document.getElementById('message_input_form').onsubmit = function (e) {
+            e.preventDefault();
+            let message = message_input.value.trim()
+            if (message.length) {
+                socket.emit('send_message', {
+                    username: "{{ username }}",
+                    room: "{{room._id}}",
+                    message: message
+                })
+            }
+            message_input.value = '';
+            message_input.focus();
+        }
+        document.getElementById('emoji_form').onsubmit = function (e) {
+            e.preventDefault();
+            socket.emit('emotion')
+        }
+
+    });
+    let page = 0;
+
+    document.getElementById("load_older_messages_btn").onclick = (e) => {
+        page += 1;
+        fetch("/rooms/{{ room._id }}/messages?page=" + page, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            response.json().then(messages => {
+                messages.reverse().forEach(message => prepend_message(message.text, message.sender, message.created_at));
+            })
+        })
+    };
+
+    function prepend_message(message, username, created_at) {
+        const newNode = document.createElement('div');
+        newNode.innerHTML = `<b>${username}&nbsp;[${created_at}]:&nbsp;</b> ${message}`;
+        const messages_div = document.getElementById('messages');
+        messages_div.insertBefore(newNode, messages_div.firstChild);
+    }
+
+    window.onbeforeunload = function () {
+        socket.emit('leave_room', {
+            username: "{{ username }}",
+            room: "{{ room._id }}"
+        })
+    };
+
+    socket.on('receive_message', function (data) {
+        console.log(data);
+        const newNode = document.createElement('div');
+        newNode.innerHTML = `<b>${data.username}&nbsp;[${data.created_at}]:&nbsp;</b>${data.message}`;
+        document.getElementById('messages').appendChild(newNode);
+        document.getElementById('message_input').value = ''
+    })
+
+    socket.on('join_room_announcement', function (data) {
+        console.log(data);
+        const newNode = document.createElement('div');
+        newNode.innerHTML = `<b>${data.username}</b> has joined the room`;
+        document.getElementById('messages').appendChild(newNode);
+    })
+
+    socket.on('catch_emotion', function (final) {
+        console.log(final)
+        // const newNode = document.createElement('div');
+        // newNode.innerHTML = `${final}`;
+        // document.getElementById('emoji').appendChild(newNode)
+        let append_emoji = final
+        document.getElementById('message_input').value += append_emoji
+        document.getElementById('message_input').focus()
+    })
+
+</script>
 
 </html>
