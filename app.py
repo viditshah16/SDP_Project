@@ -122,10 +122,13 @@ def view_room(room_id):
     print(room_id)
     room = get_room(room_id)
     print(room)
+    temp = False
     if room and is_room_member(room_id , current_user.username):
         room_members = get_room_members(room_id)
         messages = get_messages(room_id)
-        return render_template('view_room.html', username=current_user.username, room=room, room_members=room_members , messages = messages)
+        temp = is_room_admin(room_id, current_user.username)
+        print(temp)
+        return render_template('view_room.html', username=current_user.username, room=room, room_members=room_members , messages = messages , temp=temp)
     else: 
         return "Room Not Found" , 404
 
