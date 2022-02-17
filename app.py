@@ -180,7 +180,7 @@ def emotion_handle():
     max_index=livevideo()            
       
         
-    label_map =['😡' , '😐' , '🙂' , '😎' , '🙄' , '😋','😋'] 
+    label_map =['😡','🤢', '😨' , '🙂' , '😞' , '😮' , '😐'] 
     final = label_map[max_index]
     socketio.emit('catch_emotion' , final)
 
