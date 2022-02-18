@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/signup.css') }}"/>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,15 +12,17 @@
     <h3>{{message}}</h3>
     <form action="/signup" , method="post">
         <label>Username : </label>
-        <input type="text" , name="username">
+        <input type="text" , name="username" placeholder="Select Unique UserId">
         <br>
         <label>Email : </label>
-        <input type="email" , name="email">
+        <input type="email" , name="email" placeholder="Enter Your Email Address">
         <br>
         <label>Password : </label>
-        <input type="password" , name="password">
+        <input type="password" , name="password" placeholder="Enter Password">
         <br>
-        <button type="submit">Submit</button>
+        <button type="submit">SignUp</button>
+        <h3 class="lgup">Login Here</h3><br>
+        <a href="/login" class="loginbtn">Login</a>
     </form>
 </body>
 </html>

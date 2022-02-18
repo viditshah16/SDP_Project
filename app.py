@@ -42,7 +42,7 @@ def login():
             login_user(user)
             return redirect(url_for('home'))
         else:
-            message = 'Failed Login!'
+            message = 'Invalid Credentials, Please try again'
 
     return render_template('login.html' , message=message)
 
@@ -161,7 +161,7 @@ def emotion_handle():
     
     model = load_model('emotion_model.h5')
     prediction = model.predict(img)
-    label_map =['😡' , '😐' , '🙂' , '😎' , '🙄' , '😋']
+    label_map =['😡','😐','😨', '🙂','😞','😧']
     prediction = np.argmax(prediction)
     final = label_map[prediction]
 

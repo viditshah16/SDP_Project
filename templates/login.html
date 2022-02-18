@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/login.css') }}"/>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Chat App</title>
 </head>
 <body>
-    <h1>Login</h1>
-    <h3>{{message}}</h3>
+    <h1>Login Here</h1>
+    <h3 class="message">{{message}}</h3>
     <form action="/login" , method="post">
         <label>Username : </label>
-        <input type="text" , name="username">
+        <input type="text" , name="username" placeholder="Enter Your Username">
         <br>
         <label>Password : </label>
-        <input type="password" , name="password">
+        <input type="password" , name="password" placeholder="Enter Your Password">
         <br>
-        <button type="submit">Submit</button>
+        <button type="submit">Login</button>
     </form>
-    <h3>New To Our Emojify Chat Application , SignUp below</h3>
-    <h4><a href="/signup" >SignUp</a></h4>
+    <h3 class="sgup">New To Our Emojify Chat Application , SignUp below</h3><br>
+    <a href="/signup" class="signupbtn">Sign Up</a>
 </body>
 </html>
