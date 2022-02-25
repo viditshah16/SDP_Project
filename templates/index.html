@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/index.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/index.css') }}" />
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,33 +10,47 @@
 </head>
 
 <body>
-    <h1>Welcome To Chat Application</h1>
-    <h1>
-        {% if current_user.is_authenticated %}
-        Hello , 
-        {{current_user.username}}
-        {% else %}
-        Please Login here
-        <br>
-        <a href="/login">Login</a>
-        {% endif %}
-    </h1>
-    <!-- <h3>Please Login <a href="{{url_for('login')}}">here</a></h3> -->
-    
-    
-    {% if current_user.is_authenticated %}
-    <h3>My rooms</h3>
-    <ul>
-        {% for room in rooms %}
-            <!-- {{room._id.room_id}} -->
-            <li><a href="/rooms/{{room._id.room_id}}">{{ room.room_name }}</a></li>
-        {% endfor %}
-    </ul>
-    <h3>Want Create Your Own Room , Visit below Link</h3>
-    <a href="/create-room/">Create-New-room</a>
-    <h3>Logout Here</h3>
-    <a href="/logout">Logout</a>
-{% endif %}
+    <div class="main">
+        <div class="left">
+            <h1 id="title1">Hey Buddy,<br> Welcome To our Emojify</h1>
+            <h1 id="title2">
+                {% if current_user.is_authenticated %}
+                Hello ,
+                {{current_user.username}}<br> Enjoy and chat in rooms
+                {% else %}
+                Join Our Emojify from Below
+                <br><br>
+                <a href="/login"><button id="login_btn">Login</button></a>&nbsp;&nbsp;<a href="/signup"><button
+                        id="login_btn">Sign Up</button></a>
+                {% endif %}
+            </h1>
+        </div>
+        <!-- <h3>Please Login <a href="{{url_for('login')}}">here</a></h3> -->
+
+        <div class="right">
+            <div class="tempright">
+                {% if current_user.is_authenticated %}
+                <h3 id="myrooms">My rooms</h3>
+                <ul class="rooms">
+                    {% for room in rooms %}
+                    <!-- {{room._id.room_id}} -->
+                    <li class="room"><a href="/rooms/{{room._id.room_id}}"><button id="robtn">{{ room.room_name
+                                }}</button></a></li>
+                    {% endfor %}
+                </ul>
+                <h3>Want Create Your Own Room , Visit below Link</h3>
+                <a href="/create-room/"><button id="newrm">Create-New-room</button></a>
+                <h3>Logout From Here</h3>
+                <a href="/logout"><button id="logout">Logout</button></a>
+                {% else %}
+                <h1 id="title3">
+                    Your Rooms Will be displayed here
+                </h1>
+                <img src="/../static/icons/a2.png" alt="">
+                {% endif %}
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

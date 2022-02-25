@@ -13,59 +13,66 @@
     <p class="welcome">Welcome {{username}} To {{room.name}}</p>
 
     <div class="main">
-    <div class="left">
-        <div id="messages">
-            {% for message in messages %}
-            <div class="message">
-                <div class="main-msg">
-                    <b class="own">{{message.sender}}</b>
-                    <h3 class="text">{{message.text}}</h3>
+        <div class="left">
+            <div id="messages">
+                {% for message in messages %}
+                <div class="message">
+                    <div class="main-msg">
+                        <b class="own">{{message.sender}}</b>
+                        <h4 class="text">{{message.text}}</h4>
+                    </div>
+                    <span class="time">{{message.created_at}}</span>
                 </div>
-                <span class="time">{{message.created_at}}</span>
+                {% endfor %}
             </div>
-            {% endfor %}
+            <div class="input">
+                <form id="emoji_form">
+                    <button class="submit" type="submit"><img class="input-icon"
+                            src="/./static/icons/smiling-face.png" /></button>
+                </form>
+                <form id="message_input_form">
+                    <input type="text" id="message_input" placeholder="Enter Your Message">
+                    <button class="submit" type="submit"><img class="input-icon"
+                            src="/./static/icons/send.png" /></button>
+                </form>
+            </div>
         </div>
-        <div class="input">
-            <form id="emoji_form">
-                <button class="submit" type="submit"><img class="input-icon" src="/./static/icons/smiling-face.png"/></button>
-            </form>
-            <form id="message_input_form">
-                <input type="text" id="message_input" placeholder="Enter Your Message">
-                <button class="submit" type="submit"><img class="input-icon" src="/./static/icons/send.png"/></button>
-            </form>
-        </div>
-    </div>
 
 
-    <div class="right">
-        <button id="load_older_messages_btn">Load older Messages</button>
-        <div class="main_member">
-            <img class="member_icon" src="/../static/icons/people.png" alt="people"/>
-            <h2 class="mem">Members: </h2>
-        </div>
-        <ul class="members">
-            {% for member in room_members%}
-            <li class="member">{{member._id.username}}</li>
-            {% endfor %}
-        </ul>
+        <div class="right">
+            <button id="load_older_messages_btn">Load older Messages</button>
+            <div class="main_member">
+                <img class="member_icon" src="/../static/icons/people.png" alt="people" />
+                <h2 class="mem">Members: </h2>
+            </div>
+            <ul class="members">
+                {% for member in room_members%}
+                <li class="member">{{member._id.username}}</li>
+                {% endfor %}
+            </ul>
 
-        <h3>Logout Here</h3>
-        <a href="/logout">Logout</a><br>
-
-        <h3>Want to chat in different Rooms , Click Here To See Your Rooms</h3>
-        <a href="/">Go Back</a><br>
-        <!-- {{username}}
-    {{room._id}} -->
-        {% if temp %}
-        <div id="edit_room">
-            <h3>You Are Admin So you can Edit Room from Below</h3>
-            <!-- {{room._id}} -->
-            <a href="/rooms/{{room._id}}/edit">Edit Room</a>
+            <a href="/logout"><button id="lgbtn">Logout</button></a><br>
+            <p>Logout From Here</p>
+            
+            <a href="/"><button id="gbbtn">Go Back</button></a><br>
+            <p>Want to chat in different Rooms , Click Here To See Your Rooms</p>
+            
+            <!-- {{username}}{{room._id}} -->
+            {% if temp %}
+            <div id="edit_room">
+                <a href="/rooms/{{room._id}}/edit"><button id="edbtn">Edit Room</button></a>
+                <p>Make some changes to your Room</p>
+                <!-- {{room._id}} -->
+            </div>
+            {% endif %}
         </div>
-        {% endif %}
-    </div>
     </div>
 </body>
+
+
+
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"
     integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA=="
     crossorigin="anonymous"></script>
@@ -118,7 +125,7 @@
         newNode.innerHTML = `<div class="message">
                                 <div class="main-msg">
                                     <b class="own">${username}</b>
-                                    <h3 class="text">${message}</h3>
+                                    <h4 class="text">${message}</h4>
                                 </div>
                                 <span class="time">${created_at}</span>
                             </div>`;
@@ -140,7 +147,7 @@
         newNode.innerHTML = `<div class="message">
                                 <div class="main-msg">
                                     <b class="own">${data.username}</b>
-                                    <h3 class="text">${data.message}</h3>
+                                    <h4 class="text">${data.message}</h4>
                                 </div>
                                 <span class="time">${data.created_at}</span>
                             </div>`;
@@ -151,7 +158,7 @@
     socket.on('join_room_announcement', function (data) {
         console.log(data);
         const newNode = document.createElement('div');
-        newNode.innerHTML = `<div class="join">${data.username} has joined the room</div>`;
+        newNode.innerHTML = `<div class="join"><b>${data.username}</b> has joined the room</div>`;
         document.getElementById('messages').appendChild(newNode);
     })
 

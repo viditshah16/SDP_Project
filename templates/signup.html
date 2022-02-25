@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/signup.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/signup.css') }}" />
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Chat App</title>
 </head>
+
 <body>
-    <h1>SignUp</h1>
+    <!-- <h1>SignUp</h1>
     <h3>{{message}}</h3>
     <form action="/signup" , method="post">
         <label>Username : </label>
@@ -22,7 +24,33 @@
         <br>
         <button type="submit">SignUp</button>
         <h3 class="lgup">Login Here</h3><br>
-        <a href="/login" class="loginbtn">Login</a>
+        <a href="/login" class="loginbtn">Login</a> -->
+
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <!-- Tabs Titles -->
+            <h3 class="message">{{message}}</h3>
+            <h2 class="active"> Sign Up </h2>
+            <h2 class="inactive underlineHover"> <a href="/login">Log In</a> </h2>
+
+
+            <!-- Icon -->
+            <div class="fadeIn first">
+                <img src="/../static/icons/a2.png" id="icon" alt="User Icon" />
+            </div>
+
+            <!-- Login Form -->
+            <form action="" method="post">
+                <input type="text" id="login" class="fadeIn second" name="username" placeholder="Username" required><br><br>
+                <input type="email" id="login" class="fadeIn third" name="email" placeholder="Enter Your Email Address"><br><br>
+                <input type="password" name="password" id="password" class="fadeIn third" placeholder="password" Required><br><br>
+                <input type="submit" class="fadeIn fourth" name="submit" value="Sign In">
+            </form>
+
+
+        </div>
+    </div>
     </form>
 </body>
+
 </html>

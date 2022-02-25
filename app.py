@@ -92,6 +92,7 @@ def create_room():
 @app.route('/rooms/<room_id>/edit', methods=['GET', 'POST'])
 @login_required
 def edit_room(room_id):
+    temp=room_id
     room = get_room(room_id)
     if room and is_room_admin(room_id, current_user.username):
         existing_room_members = [member['_id']['username'] for member in get_room_members(room_id)]
@@ -111,7 +112,7 @@ def edit_room(room_id):
                 remove_room_members(room_id, members_to_remove)
             message = 'Room edited successfully'
             room_members_str = ",".join(new_members)
-        return render_template('edit_room.html', room=room, room_members_str=room_members_str, message=message)
+        return render_template('edit_room.html', room=room, room_members_str=room_members_str, message=message , temp=temp)
     else:
         return "Room not found", 404
 
@@ -153,18 +154,9 @@ def handle_join_room_event(data):
 
 @socketio.on('emotion')
 def emotion_handle():
-    image  = livevideo()
-    img = cv2.imread(image , 0)
-
-    img = cv2.resize(img , (48,48))
-    img = np.reshape(img ,(1,48,48,1))
-    
-    model = load_model('emotion_model.h5')
-    prediction = model.predict(img)
-    label_map =['😡','😐','😨', '🙂','😞','😧']
-    prediction = np.argmax(prediction)
-    final = label_map[prediction]
-
+    max_index=livevideo()              
+    label_map =['😡','🤢', '😨' , '🙂' , '😐', '😞' , '😮' ] 
+    final = label_map[max_index]
     socketio.emit('catch_emotion' , final)
 
 

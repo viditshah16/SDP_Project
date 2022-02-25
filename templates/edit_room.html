@@ -2,23 +2,25 @@
 <html lang="en">
 
 <head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/edit_room.css') }}" />
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Edit Room</title>
 </head>
 
 <body>
-    <h1>Edit Room</h1>
-    <h3>{{ message }}</h3>
+    <h1>EDIT ROOM</h1>
+    <h3 class="message">{{ message }}</h3>
     <form method="post">
         <label>Room Name:</label>
         <input type="text" name="room_name" value="{{ room.name }}">
         <br>
         <label>Members:</label>
         <input type="text" name="members" value="{{ room_members_str }}">
-        <br>
-        <button type="submit">Submit</button>
+        <br><br>
+        <button type="submit">UPDATE</button>
+        <a class="return" href="/rooms/{{temp}}">⬅ Return</a>
     </form>
 </body>
 
