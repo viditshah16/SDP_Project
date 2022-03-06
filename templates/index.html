@@ -6,24 +6,31 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Chat App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Welcome to Emojify</title>
 </head>
 
 <body>
     <div class="main">
         <div class="left">
-            <h1 id="title1">Hey Buddy,<br> Welcome To our Emojify</h1>
+            <h1 id="title1"> Welcome To our Emojify</h1>
             <h1 id="title2">
                 {% if current_user.is_authenticated %}
-                Hello ,
-                {{current_user.username}}<br> Enjoy and chat in rooms
+                Whats Up,
+                {{current_user.username}}<br> 
+                Enjoy chatting with your friends
                 {% else %}
-                Join Our Emojify from Below
+                Enter to our chat application and explore emojis
                 <br><br>
                 <a href="/login"><button id="login_btn">Login</button></a>&nbsp;&nbsp;<a href="/signup"><button
                         id="login_btn">Sign Up</button></a>
                 {% endif %}
-            </h1>
+            </h1><br><br><br><br><br><br><br><br>
+            <h1 id="contact">Contact Us</h1>
+            <div id="icon1">
+                <h2 id="owner">Vidit Shah : &nbsp;<a href="https://www.instagram.com/__vidit__/" target="_blank" class="fa fa-instagram"></a>&nbsp;&nbsp;<a href="https://www.linkedin.com/in/vidit-shah-440694169" target="_blank" class="fa fa-linkedin"></a>&nbsp;&nbsp;<a href="mailto: viditshah2000@gmail.com" target="_blank" class="fa fa-google"></a></h2>
+                <h2 id="owner">Bhavin Chavda : &nbsp;<a href="https://www.instagram.com/bhavin.chavda.07/" target="_blank" class="fa fa-instagram"></a>&nbsp;&nbsp;<a href="https://www.linkedin.com/in/bhavin-chavda-6472021b7/" target="_blank" class="fa fa-linkedin"></a>&nbsp;&nbsp;<a href="mailto: bhavinchavda096@gmail.com" target="_blank" class="fa fa-google"></a></h2>
+            </div>
         </div>
         <!-- <h3>Please Login <a href="{{url_for('login')}}">here</a></h3> -->
 
@@ -37,11 +44,11 @@
                     <li class="room"><a href="/rooms/{{room._id.room_id}}"><button id="robtn">{{ room.room_name
                                 }}</button></a></li>
                     {% endfor %}
-                </ul>
-                <h3>Want Create Your Own Room , Visit below Link</h3>
+                </ul><br><br><br>
                 <a href="/create-room/"><button id="newrm">Create-New-room</button></a>
-                <h3>Logout From Here</h3>
+                <p>Create Your Own New Room</p>
                 <a href="/logout"><button id="logout">Logout</button></a>
+                <p>Logout From Here</p>
                 {% else %}
                 <h1 id="title3">
                     Your Rooms Will be displayed here

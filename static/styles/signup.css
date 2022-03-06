@@ -3,7 +3,7 @@
       /* BASIC */
   
       html {
-        background-color: #56baed;
+        background-color: rgb(143, 28, 28);
       }
   
       body {
@@ -12,7 +12,7 @@
       }
   
       a {
-        color: #92badd;
+        color: #ffa581;
         display: inline-block;
         text-decoration: none;
         font-weight: 400;
@@ -75,7 +75,7 @@
   
       h2.active {
         color: #0d0d0d;
-        border-bottom: 2px solid #5fbae9;
+        border-bottom: 2px solid #f54906;
       }
   
   
@@ -85,7 +85,7 @@
       input[type=button],
       input[type=submit],
       input[type=reset] {
-        background-color: #56baed;
+        background-color: rgb(241, 71, 71);
         border: none;
         color: white;
         padding: 15px 80px;
@@ -94,8 +94,8 @@
         display: inline-block;
         text-transform: uppercase;
         font-size: 13px;
-        -webkit-box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
-        box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
+        -webkit-box-shadow: 0 10px 30px 0 rgba(207, 125, 125, 0.959);
+        box-shadow: 0 10px 30px 0 rgba(214, 126, 126, 0.959);
         -webkit-border-radius: 5px 5px 5px 5px;
         border-radius: 5px 5px 5px 5px;
         margin: 5px 20px 40px 20px;
@@ -109,7 +109,7 @@
       input[type=button]:hover,
       input[type=submit]:hover,
       input[type=reset]:hover {
-        background-color: #39ace7;
+        background-color: brown;
       }
   
       input[type=button]:active,
@@ -145,7 +145,11 @@
   
       input[type=text]:focus {
         background-color: #fff;
-        border-bottom: 2px solid #5fbae9;
+        border-bottom: 2px solid #f54906;
+      }
+      input[type=email]:focus {
+        background-color: #fff;
+        border-bottom: 2px solid #f54906;
       }
   
       input[type=text]:placeholder {
@@ -176,7 +180,7 @@
   
       input[type=password]:focus {
         background-color: #fff;
-        border-bottom: 2px solid #5fbae9;
+        border-bottom: 2px solid #f54906;
       }
   
       input[type=password]:placeholder {
@@ -303,7 +307,7 @@
         bottom: -10px;
         width: 0;
         height: 2px;
-        background-color: #56baed;
+        background-color: #f54906;
         content: "";
         transition: width 0.2s;
       }

@@ -26,9 +26,9 @@ body {
     text-decoration: none;
     border: 0;
     background: white;
-    color: black;
+    color: brown;
     padding: 0.5rem 0.8rem;
-    border: 3px solid black;
+    border: 3px solid brown;
     /* font-size: large; */
     border-radius: 10px;
     font-size: 1rem;
@@ -37,7 +37,7 @@ body {
   }
 
 #load_older_messages_btn:hover{
-    background: black;
+    background: brown;
     color: white;
 }
 
@@ -112,7 +112,7 @@ input[type=text] {
     margin: 8px 0;
     box-sizing: border-box;
     /* border: 1px solid #555; */
-    border-bottom: 2px solid #3b3e3f;
+    border-bottom: 2px solid #f19354;
     outline: none;
     -webkit-transition: all 0.2s ease-in-out;
   -moz-transition: all 0.2s ease-in-out;
@@ -126,7 +126,7 @@ input[type=text] {
 
 input[type=text]:focus {
     background-color: #fff;
-    border-bottom: 2px solid #5fbae9;
+    border-bottom: 2px solid #ff4a02;
   }
 
 .input-icon{
@@ -162,6 +162,7 @@ input[type=text]:focus {
 .mem{
     padding: 1rem;
     margin: 0;
+    color: rgb(131, 26, 26);
 }
 .members{
     text-decoration: none;

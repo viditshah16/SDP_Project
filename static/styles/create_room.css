@@ -39,20 +39,16 @@ button {
     width: 100%;
   }
 
-button:hover {
-   opacity: 0.8;
-}
+  button:hover {
+    opacity: 0.8;
+ }
 
-label{
+ label{
     font-size: 20px;
     color: rgb(136, 52, 52);
 }
 
-.message{
-    color: green;
-}
-
-.return{
+.home{
     color: brown;
     text-decoration: none;
 }

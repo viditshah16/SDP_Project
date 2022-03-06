@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/create_room.css') }}" />
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Create Room</title>
 </head>
 <body>
     <h1>Create Room</h1>
@@ -12,10 +13,12 @@
     <form action="" method="post">
         <label>Room Name : </label>
         <input type="text" name="room_name">
+        <br>
         <label>Members : </label>
         <input type="text" name="members">
-        <br>
-        <button type="submit">Submit</button>
+        <br><br>
+        <button type="submit">CREATE</button>
+        <a class="home" href="/">⬅ Home</a>
     </form>
 </body>
 </html>
