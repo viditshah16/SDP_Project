@@ -10,7 +10,7 @@ img_name = ""
 # model = model_from_json(open("fer.json", "r").read())  
 
 # #load weights  
-model=load_model('fer_model.h5')  
+model=load_model('fer_final.h5')  
 
 
 face_haar_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
